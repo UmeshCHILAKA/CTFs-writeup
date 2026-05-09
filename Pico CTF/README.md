@@ -36,18 +36,76 @@ Checked the plain text -  **did not find anything useful**
 
 Checked the exiftool online [Free Online EXIF Metadata Viewer & Extractor Tool - ExifMeta](https://exifmeta.com/), nothing spl except 
 
-Comment	**c3RlZ2hpZGU6Y0VGNmVuZHZjbVE9**
 
-Use magic feature of https://cyberchef.io/ when do not know what to do 
+> Comment :    **c3RlZ2hpZGU6Y0VGNmVuZHZjbVE9**
 
-c3RlZ2hpZGU6Y0VGNmVuZHZjbVE9   => from base64 translates to    **steghide:cEF6endvcmQ=**
+Use magic feature of [CyberChef](https://cyberchef.io/) when do not know what to do 
 
-cEF6endvcmQ=          =>   from base64 translates to **pAzzword**
+*c3RlZ2hpZGU6Y0VGNmVuZHZjbVE9* => from base64 translates to    **steghide:cEF6endvcmQ=**
+
+*cEF6endvcmQ=* => from base64 translates to **pAzzword**
 
 **steghide** is the cli tool to hide/show the steganographed content from image file
 
-Command : **steghide extract -sf img.jpg -p pAzzword**
+> Command : **steghide extract -sf img.jpg -p pAzzword**
 
 Extracts data to a file. 
 
 ~~picoCTF{h1dd3n_1n_1m4g3_656e4d79}~~
+
+##	Flag in Flame
+The SOC team discovered a suspiciously large log file after a recent breach. When they opened it, they found an enormous block of encoded text instead of typical logs. Could there be something hidden within? Your mission is to inspect the resulting file and reveal the real purpose of it. The team is relying on your skills to uncover any concealed information within this unusual log.Download the encoded data here: [Logs Data](https://challenge-files.picoctf.net/c_amiable_citadel/7644875fe64cafe647bcd166855b1adf4368ed7f13be7acb281f8647eb0a5b83/logs.txt). Be prepared—the file is large, and examining it thoroughly is crucial .
+
+### Actions Performed
+
+Checked the file in notepad, **could not find any info**
+Checked the [CyberChef](https://cyberchef.io/) to read it as base64 data.
+Found the start character are .PNG, might be an image file.
+
+Save the decoded base64 data and renamed to PNG
+Once the image is opened, it has ascii code in Hex format.
+
+Ascii converted to flag as
+
+~~picoCTF{forensics_analysis_is_amazing_ec1984fc}~~
+
+
+##	Crack the Gate 1
+We’re in the middle of an investigation. One of our persons of interest, ctf player, is believed to be hiding sensitive data inside a restricted web portal. We’ve uncovered the email address he uses to log in: ctf-player@picoctf.org. Unfortunately, we don’t know the password, and the usual guessing techniques haven’t worked. But something feels off... it’s almost like the developer left a secret way in. Can you figure it out?
+Additional details will be available after launching your challenge instance.
+
+### Actions Performed
+With viewing the source and help of hint, the comment is 
+ABGR: Wnpx - grzcbenel olcnff: hfr urnqre "K-Qri-Npprff: lrf"
+
+**Decoded using:** [ROT Cipher - Rotation - Online Rot Decoder, Solver, Translator](https://www.dcode.fr/rot-cipher)
+temporary bypass: use header "X-Dev-Access: yes"
+
+Launched the web page, enter the username as in question and dummy password.
+
+In devetools of browser
+1. logged the post request
+2. Copied the post request as fetch
+3. updated headers to add the X-Dev-Access
+4. Rerun the fetch in console
+5. Read the response for this new POST query
+
+~~"flag": "picoCTF{brut4_f0rc4_b3a957eb}"~~
+
+##	Corrupted file
+This file seems broken... or is it? Maybe a couple of bytes could make all the difference. Can you figure out how to bring it back to life?Download the file here.
+
+### Actions Performed
+Hint 1: Try checking the file’s header.
+
+Hint 2:JPEG
+
+Hint 3: Tools like xxd or hexdump can help you inspect and edit file bytes.
+
+From the hints, file type is JPEG.
+Created a dummy JPEG file from paint.
+Compared the headers of created and downloaded file.
+updated the header and renamed 
+Flag is displayed in JPEG image.
+
+ ~~picoCTF{r3st0r1ng_th3_by73s_efd8c6c0}~~
